@@ -14,7 +14,7 @@ class InitiateTransactionRequest extends BaseRequest
         $this->validate('amount');
 
         return [
-            'redirect' => false,
+            'redirect' => true,
             'success' => false
         ];
     }
