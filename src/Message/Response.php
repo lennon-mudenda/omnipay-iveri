@@ -15,7 +15,7 @@ class Response extends AbstractResponse implements ResponseInterface
 
 	public function getTransactionPaymentLink(): ?string
 	{
-        return $this->request->getGatewayURL() . "?" . $this->getEncodedParams();
+        return $this->request->getGatewayURL();
 	}
 
 	public function isRedirect(): bool
@@ -28,7 +28,17 @@ class Response extends AbstractResponse implements ResponseInterface
 		return $this->getTransactionPaymentLink();
 	}
 
-    public function getEncodedParams(): string
+    public function getRedirectMethod(): string
+    {
+        return 'POST';
+    }
+
+    public function getRedirectData(): array|string
+    {
+        return $this->getData();
+    }
+
+    public function getData(): array
     {
         $mappings = [
             'getMerchantApplicationId' => 'Lite_Merchant_ApplicationId',
@@ -50,19 +60,19 @@ class Response extends AbstractResponse implements ResponseInterface
             'amount' => 'Lite_Order_LineItems_Amount_',
         ];
 
-        $encodedParams = '';
+        $data = [];
 
         foreach ($mappings as $key => $param_name) {
             $param_value = $this->request->{$key}();
-            $encodedParams .= (strlen($encodedParams) == 0 ? "{$param_name}={$param_value}" : "&{$param_name}={$param_value}");
+            $data[$param_name] = $param_value;
         }
 
         foreach ($this->request->getLineItems() as $index => $lineItem) {
-            $encodedParams .= '&' . $lineItemMappings['product'] . ($index + 1) . '=' . $lineItem['product'] . '&';
-            $encodedParams .= $lineItemMappings['quantity'] . ($index + 1) . '=' . $lineItem['quantity'] . '&';
-            $encodedParams .= $lineItemMappings['amount'] . ($index + 1) . '=' . $lineItem['amount'];
+            $data[$lineItemMappings['product'] . ($index + 1)] = $lineItem['product'];
+            $data[$lineItemMappings['quantity'] . ($index + 1)] = $lineItem['quantity'];
+            $data[$lineItemMappings['amount'] . ($index + 1)] = $lineItem['amount'];
         }
 
-        return $encodedParams;
+        return $data;
     }
 }
