@@ -33,12 +33,12 @@ class Response extends AbstractResponse implements ResponseInterface
         return 'POST';
     }
 
-    public function getRedirectData(): array|string
+    public function getRedirectData(): array
     {
-        return $this->getData();
+        return $this->getRedirectBody();
     }
 
-    public function getData(): array
+    public function getRedirectBody(): array
     {
         $mappings = [
             'getMerchantApplicationId' => 'Lite_Merchant_ApplicationId',
