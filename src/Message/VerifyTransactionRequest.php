@@ -2,9 +2,6 @@
 
 namespace Omnipay\IVeri\Message;
 
-use Dpo\Common\Dpo;
-use SimpleXMLElement;
-use Omnipay\Common\Exception\InvalidRequestException;
 
 class VerifyTransactionRequest extends BaseRequest
 {
@@ -46,6 +43,16 @@ class VerifyTransactionRequest extends BaseRequest
     public function setIsPaymentError(?int $isPaymentError = 0): void
     {
         $this->setParameter('is_payment_error', $isPaymentError ?? 0);
+    }
+
+    public function getTransactionToken(): ?string
+    {
+        return $this->getParameter('transactionToken');
+    }
+
+    public function setTransactionToken(?string $transactionToken): void
+    {
+        $this->setParameter('transactionToken', $transactionToken ?? '');
     }
 
     public function getData(): array
