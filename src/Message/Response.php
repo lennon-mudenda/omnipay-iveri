@@ -64,13 +64,13 @@ class Response extends AbstractResponse implements ResponseInterface
 
         foreach ($mappings as $key => $param_name) {
             $param_value = $this->request->{$key}();
-            $data[$param_name] = $param_value;
+            $data[$param_name] = $param_value . "";
         }
 
         foreach ($this->request->getLineItems() as $index => $lineItem) {
-            $data[$lineItemMappings['product'] . ($index + 1)] = $lineItem['product'];
-            $data[$lineItemMappings['quantity'] . ($index + 1)] = $lineItem['quantity'];
-            $data[$lineItemMappings['amount'] . ($index + 1)] = $lineItem['amount'];
+            $data[$lineItemMappings['product'] . ($index + 1)] = $lineItem['product'] . "";
+            $data[$lineItemMappings['quantity'] . ($index + 1)] = $lineItem['quantity'] . "";
+            $data[$lineItemMappings['amount'] . ($index + 1)] = $lineItem['amount'] . "";
         }
 
         return $data;
