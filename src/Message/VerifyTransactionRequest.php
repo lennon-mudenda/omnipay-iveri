@@ -2,58 +2,68 @@
 
 namespace Omnipay\IVeri\Message;
 
-use Dpo\Common\Dpo;
-use SimpleXMLElement;
-use Omnipay\Common\Exception\InvalidRequestException;
 
 class VerifyTransactionRequest extends BaseRequest
 {
-    /**
-     * @throws InvalidRequestException
-     */
+    public function getSuccessful(): int
+    {
+        return $this->getParameter('successful');
+    }
+
+    public function setSuccessful(?int $successful = 0): void
+    {
+        $this->setParameter('successful', $successful ?? 0);
+    }
+
+    public function getFailed(): int
+    {
+        return $this->getParameter('failed');
+    }
+
+    public function setFailed(?int $failed = 0): void
+    {
+        $this->setParameter('failed', $failed ?? 0);
+    }
+
+    public function getTryLater(): int
+    {
+        return $this->getParameter('try_later');
+    }
+
+    public function setTryLater(?int $tryLater = 0): void
+    {
+        $this->setParameter('try_later', $tryLater ?? 0);
+    }
+
+    public function getIsPaymentError(): int
+    {
+        return $this->getParameter('is_payment_error');
+    }
+
+    public function setIsPaymentError(?int $isPaymentError = 0): void
+    {
+        $this->setParameter('is_payment_error', $isPaymentError ?? 0);
+    }
+
+    public function getTransactionToken(): ?string
+    {
+        return $this->getParameter('transactionToken');
+    }
+
+    public function setTransactionToken(?string $transactionToken): void
+    {
+        $this->setParameter('transactionToken', $transactionToken ?? '');
+    }
+
     public function getData(): array
     {
-        $this->validate('transactionToken');
-
         return [
-			'companyToken' => $this->getCompanyToken(),
-			'transToken' => $this->getTransactionToken(),
+			"success" => $this->getSuccessful(),
 		];
     }
 
     public function sendData($data): Response
     {
-		$data['redirect'] = false;
-		try {
-			$dpoClient = new Dpo($this->getTestMode());
-
-			$response = $dpoClient->verifyToken($data);
-
-			$xml = new SimpleXMLElement($response);
-
-			$code = $xml->xpath('Result')[0]->__toString();
-			$message = $xml->xpath('ResultExplanation')[0]->__toString();
-
-			$data['metadata'] = [
-				'result' => $code,
-				'message' => $message,
-			];
-
-			if (in_array($code, ['000', '001', '002'])) {
-				$data['success'] = true;
-				$data['message'] = "Success";
-			} else {
-				throw new \Exception(
-					$message
-				);
-			}
-		} catch (\Exception $exception) {
-			$errorMessage = $exception->getMessage();
-
-			$data['success'] = false;
-			$data['message'] = "Failure: $errorMessage";
-		}
-
-		return $this->response = new Response($this, $data);
+        return $this->response = new Response($this, $data);
     }
 }

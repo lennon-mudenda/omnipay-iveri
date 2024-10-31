@@ -140,13 +140,13 @@ abstract class BaseRequest extends AbstractRequest implements RequestInterface
     }
 
     // Transaction Complete Flag
-    public function getTransactionComplete(): bool|string|null
+    public function getTransactionComplete(): string
     {
         return $this->getParameter('transactionComplete');
     }
 
-    public function setTransactionComplete(bool|null $complete = false): void
+    public function setTransactionComplete(?string $complete = 'False'): void
     {
-        $this->setParameter('transactionComplete', $complete ?? 'false');
+        $this->setParameter('transactionComplete', $complete ?? 'False');
     }
 }
