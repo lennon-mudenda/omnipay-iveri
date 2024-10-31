@@ -75,4 +75,9 @@ class Response extends AbstractResponse implements ResponseInterface
 
         return $data;
     }
+
+    public function getTransactionReference(): ?string
+    {
+        return $this->request->getTransactionToken();
+    }
 }
