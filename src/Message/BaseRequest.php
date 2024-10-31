@@ -30,12 +30,12 @@ abstract class BaseRequest extends AbstractRequest implements RequestInterface
     }
 
     // Order Amount
-    public function getOrderAmount(): ?string
+    public function getOrderAmount(): ?int
     {
         return $this->getParameter('amount');
     }
 
-    public function setOrderAmount(string $amount = null): void
+    public function setOrderAmount(int $amount = null): void
     {
         $this->setParameter('amount', $amount);
     }
