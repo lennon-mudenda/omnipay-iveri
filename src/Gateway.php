@@ -4,6 +4,7 @@ namespace Omnipay\IVeri;
 
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\IVeri\Message\CompleteTransactionRequest;
 use Omnipay\IVeri\Message\VerifyTransactionRequest;
 use Omnipay\IVeri\Message\InitiateTransactionRequest;
 
@@ -41,7 +42,7 @@ class Gateway extends AbstractGateway
 	 */
 	public function completePurchase(array $options = []): AbstractRequest
 	{
-		return $this->createRequest(VerifyTransactionRequest::class, $options);
+		return $this->createRequest(CompleteTransactionRequest::class, $options);
 	}
 
 	/**
