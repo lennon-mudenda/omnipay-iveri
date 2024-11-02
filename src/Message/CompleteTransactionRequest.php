@@ -2,10 +2,9 @@
 
 namespace Omnipay\IVeri\Message;
 
-use Omnipay\Common\Http\ClientInterface;
 use Omnipay\Common\Message\AbstractRequest;
 
-class CompleteTransactionRequest extends AbstractRequest implements ClientInterface
+class CompleteTransactionRequest extends AbstractRequest
 {
     public function getStatusCode(): ?int
     {
@@ -82,13 +81,8 @@ class CompleteTransactionRequest extends AbstractRequest implements ClientInterf
         return [];
     }
 
-    public function sendData($data): CompleteTransactionRequest
+    public function sendData($data): CompleteTransactionResponse
     {
-        return new CompleteTransactionRequest($this, $data);
-    }
-
-    public function request($method, $uri, array $headers = [], $body = null, $protocolVersion = '1.1')
-    {
-        // TODO: Implement request() method.
+        return new CompleteTransactionResponse($this, $data);
     }
 }
