@@ -3,9 +3,8 @@
 namespace Omnipay\IVeri\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\Common\Message\RequestInterface;
 
-abstract class BaseRequest extends AbstractRequest implements RequestInterface
+abstract class BaseRequest extends AbstractRequest
 {
     // Merchant Application ID
     public function getGatewayURL(): ?string
